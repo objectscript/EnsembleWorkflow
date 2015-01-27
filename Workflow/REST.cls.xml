@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="Workflow.REST">
+<Super>Workflow.AbstractREST</Super>
+<TimeCreated>63579,55437.349631</TimeCreated>
+
+<XData name="UrlMap">
+<XMLNamespace>http://www.intersystems.com/urlmap</XMLNamespace>
+<Data><![CDATA[
+<Routes>
+<Route Url="/tasks" Method="GET" Call="GetTasks"/>
+<Route Url="/test" Method="GET" Call="Test"/>
+</Routes>
+]]></Data>
+</XData>
+
+<Method name="GetTasks">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[	return ##class(Workflow.Main).ListTasksForUser()
+]]></Implementation>
+</Method>
+
+<Method name="Test">
+<Description>
+Test method</Description>
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+    write "{Status: ""OK""}"
+    return $$$OK
+]]></Implementation>
+</Method>
+</Class>
+</Export>

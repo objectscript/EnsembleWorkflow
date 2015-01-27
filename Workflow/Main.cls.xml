@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="Workflow.Main">
+<Super>%RegisteredObject</Super>
+<TimeCreated>63579,56755.780815</TimeCreated>
+
+<Method name="ListTasksForUser">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	
+	&sql(SELECT SqlQuery into :sql FROM %Dictionary.QueryDefinition WHERE Id='EnsLib.Workflow.Engine||ListTasksForCurrentUser')
+ 	set sql =$Replace(sql,"Worklist","EnsLib_Workflow.Worklist") //because we need to add schema. Tried: #SQLCompile Path=EnsLib_Workflow and Import EnsLib.Workflow 
+	do ##class(%ZEN.Auxiliary.jsonSQLProvider).%WriteJSONFromSQL(,sql,,$$$MaxCacheInt)
+	return $$$OK
+]]></Implementation>
+</Method>
+</Class>
+</Export>
