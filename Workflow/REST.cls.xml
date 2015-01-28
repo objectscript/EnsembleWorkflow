@@ -13,6 +13,7 @@
 <XMLNamespace>http://www.intersystems.com/urlmap</XMLNamespace>
 <Data><![CDATA[
 <Routes>
+<Route Url="/login" Method="POST" Call="DoLogin"/>
 <Route Url="/task" Method="GET" Call="GetTasks"/>
 <Route Url="/task/:id" Method="GET" Call="GetTask"/>
 <Route Url="/task/:id" Method="POST" Call="PostTask"/>
@@ -20,6 +21,18 @@
 </Routes>
 ]]></Data>
 </XData>
+
+<Method name="DoLogin">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	#dim %session As %CSP.Session
+	set st = %session.Login(%request.Content.Username,%request.Content.Password)
+	return:($$$ISERR(st)) st
+	write "{Username: """_$Username_"""}"
+	return $$$OK
+]]></Implementation>
+</Method>
 
 <Method name="GetTasks">
 <ClassMethod>1</ClassMethod>
