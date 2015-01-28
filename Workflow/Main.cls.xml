@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Export generator="Cache" version="25">
 <Class name="Workflow.Main">
+<IncludeCode>%occErrors,%ZEN.Utils</IncludeCode>
 <Super>%RegisteredObject</Super>
 <TimeCreated>63579,56755.780815</TimeCreated>
 
@@ -13,6 +14,22 @@
  	set sql =$Replace(sql,"Worklist","EnsLib_Workflow.Worklist") //because we need to add schema. Tried: #SQLCompile Path=EnsLib_Workflow and Import EnsLib.Workflow 
 	do ##class(%ZEN.Auxiliary.jsonSQLProvider).%WriteJSONFromSQL(,sql,,$$$MaxCacheInt)
 	return $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="GetTask">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>Id:%String</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	#dim task As EnsLib.Workflow.Worklist
+	return:'##class(EnsLib.Workflow.Worklist).%ExistsId(Id) $$$ERROR($$$GeneralError,"Instance with that id does not exist")
+    set task = ##class(EnsLib.Workflow.Worklist).%OpenId(Id,,.st)
+    set TASK = task.Task
+    zw TASK
+    return:($$$ISERR(st)) st   
+    set st = ##class(Workflow.jsonProvider).%ObjectToJSON(task)	
+	return st
 ]]></Implementation>
 </Method>
 </Class>

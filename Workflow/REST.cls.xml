@@ -4,11 +4,18 @@
 <Super>Workflow.AbstractREST</Super>
 <TimeCreated>63579,55437.349631</TimeCreated>
 
+<Parameter name="UseSession">
+<Type>Integer</Type>
+<Default>1</Default>
+</Parameter>
+
 <XData name="UrlMap">
 <XMLNamespace>http://www.intersystems.com/urlmap</XMLNamespace>
 <Data><![CDATA[
 <Routes>
-<Route Url="/tasks" Method="GET" Call="GetTasks"/>
+<Route Url="/task" Method="GET" Call="GetTasks"/>
+<Route Url="/task/:id" Method="GET" Call="GetTask"/>
+<Route Url="/task/:id" Method="POST" Call="PostTask"/>
 <Route Url="/test" Method="GET" Call="Test"/>
 </Routes>
 ]]></Data>
@@ -18,6 +25,36 @@
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[	return ##class(Workflow.Main).ListTasksForUser()
+]]></Implementation>
+</Method>
+
+<Method name="GetTask">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>id:%String</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[	return ##class(Workflow.Main).GetTask(id)
+]]></Implementation>
+</Method>
+
+<Method name="PostTask">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>id:%String</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	#dim %request As %CSP.Request
+	
+	// For EnsLib.Workflow.FormEngine compatibility
+	set %request.Data("$ITEMID",1) = id
+	set tTaskResponce = %request.Content.Task
+	set tFormFields = taskresponce.%FormFields
+
+	for i = 1:1:$L(tFormFields,",") {
+		Set tField = $P(tFormFields,",",i)
+		If (tField '= "") {
+			set %request.Data(tField,1) = tTaskResponce.%FormValues.GetAt(tField)
+		}
+	}
+	return ##class(EnsLib.Workflow.FormEngine).%OnSubmit(tTaskResponce,.msq)
 ]]></Implementation>
 </Method>
 

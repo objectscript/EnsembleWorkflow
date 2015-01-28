@@ -179,7 +179,7 @@ Validates incoming request against Body Route attribute.<br>]]></Description>
 	
 	return:(pMethod'="POST") $$$OK
 
-	return:'$d(%request.Content.%data(pBody)) $$$ERROR($$$PropertyRequired,pBody)
+	//return:'$d(%request.Content.%data(pBody)) $$$ERROR($$$PropertyRequired,pBody)
 	
 	return $$$OK
 ]]></Implementation>
