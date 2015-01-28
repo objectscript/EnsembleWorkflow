@@ -14,9 +14,9 @@
 <Data><![CDATA[
 <Routes>
 <Route Url="/login" Method="POST" Call="DoLogin"/>
-<Route Url="/task" Method="GET" Call="GetTasks"/>
-<Route Url="/task/:id" Method="GET" Call="GetTask"/>
-<Route Url="/task/:id" Method="POST" Call="PostTask"/>
+<Route Url="/tasks" Method="GET" Call="GetTasks"/>
+<Route Url="/tasks/:id" Method="GET" Call="GetTask"/>
+<Route Url="/tasks/:id" Method="POST" Call="PostTask"/>
 <Route Url="/test" Method="GET" Call="Test"/>
 </Routes>
 ]]></Data>
