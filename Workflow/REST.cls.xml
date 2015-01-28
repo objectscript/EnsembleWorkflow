@@ -49,8 +49,8 @@
 	set tFormFields = taskresponce.%FormFields
 
 	for i = 1:1:$L(tFormFields,",") {
-		Set tField = $P(tFormFields,",",i)
-		If (tField '= "") {
+		set tField = $P(tFormFields,",",i)
+		if (tField '= "") {
 			set %request.Data(tField,1) = tTaskResponce.%FormValues.GetAt(tField)
 		}
 	}
