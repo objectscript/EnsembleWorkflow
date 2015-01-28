@@ -5,11 +5,6 @@
 <Super>%CSP.REST</Super>
 <TimeCreated>63579,55873.869445</TimeCreated>
 
-<Parameter name="UseSession">
-<Type>Integer</Type>
-<Default>1</Default>
-</Parameter>
-
 <Method name="DispatchRequest">
 <Description><![CDATA[
 Dispatch a REST request according to URL and Method.<br>
