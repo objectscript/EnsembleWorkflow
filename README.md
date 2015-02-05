@@ -17,5 +17,5 @@ These are the possible requests to web application (add param ?Namespace={Desire
 | login                       | POST | { "Username":"CacheUser","Password":"CachePassword" }| JSON| Current user|
 | tasks                       | GET  |                             | JSON      | Unassigned tasks or assigned to current user |
 | tasks/:id                   | GET  |                             | JSON      | EnsLib.Workflow.Worklist object|
-| tasks/:id                   | POST |{EnsLib.Workflow.Worklist object}JSON    | Processing of modified object  |
+| tasks/:id                   | POST |{EnsLib.Workflow.Worklist object}|JSON   | Processing of modified object  |
 | test                        | GET  |                             | JSON      | Test info                      |
