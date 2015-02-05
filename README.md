@@ -1,4 +1,5 @@
-# EnsembleWorkflow
+EnsembleWorkflow
+==============
 Restful web API for InterSystems Ensemble Workflow
 
 ## Installation
@@ -8,7 +9,6 @@ Restful web API for InterSystems Ensemble Workflow
 
 
 ##Requests
------------
 
 These are the possible requests to web application (add param ?Namespace={Desired Namespace} to query another namespace cubes):
 
