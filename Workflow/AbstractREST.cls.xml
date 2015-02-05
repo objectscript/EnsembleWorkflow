@@ -174,7 +174,7 @@ Issue an '500' error and give some indication as to what occurred.<br>
     Set %response.Status="500 Internal Server Error"
     
     #; Return a helpful error string
-    Write "{Error:"_$$$ZENJSSTR($System.Status.GetErrorText(pStatus,%session.Language))_"}"
+    Write "{""Error"":"_$$$ZENJSSTR($System.Status.GetErrorText(pStatus,%session.Language))_"}"
 ]]></Implementation>
 </Method>
 

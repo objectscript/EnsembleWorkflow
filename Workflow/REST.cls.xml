@@ -29,7 +29,7 @@
 	#dim %session As %CSP.Session
 	set st = %session.Login(%request.Content.Username,%request.Content.Password)
 	return:($$$ISERR(st)) st
-	write "{Username: """_$Username_"""}"
+	write "{""Username"": """_$Username_"""}"
 	return $$$OK
 ]]></Implementation>
 </Method>
