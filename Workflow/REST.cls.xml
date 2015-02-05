@@ -55,11 +55,13 @@
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	#dim %request As %CSP.Request
+	//#dim %request.Content As EnsLib.Workflow.Worklist
+	#dim tTaskResponce As EnsLib.Workflow.TaskResponse
 	
 	// For EnsLib.Workflow.FormEngine compatibility
 	set %request.Data("$ITEMID",1) = id
 	set tTaskResponce = %request.Content.Task
-	set tFormFields = taskresponce.%FormFields
+	set tFormFields = tTaskResponce.%FormFields
 
 	for i = 1:1:$L(tFormFields,",") {
 		set tField = $P(tFormFields,",",i)
