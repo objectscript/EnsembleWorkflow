@@ -17,9 +17,14 @@ Add param Namespace to a request to execute in desired namespace. Package must b
 	#dim %response As %CSP.Response
 	#dim %request As %CSP.Request
 	#dim %session As %CSP.Session
+	
+	Do %response.SetHeader("Access-Control-Allow-Origin","*")
+	Do %response.SetHeader("Access-Control-Allow-Methods","GET, PUT, POST, DELETE, OPTIONS")
+	Do %response.SetHeader("Access-Control-Max-Age","10000")
+	Do %response.SetHeader("Access-Control-Allow-Headers","Content-Type, Authorization, Accept-Language") 
 	 
-	set %response.ContentType="text/json"
-	set %session.Language=$$MatchLanguage^%occMessages(%request.GetCgiEnv("HTTP_ACCEPT_LANGUAGE"),"%CSP","+s") // Localization support
+	Set %response.ContentType="application/json"
+	Set %session.Language=$$MatchLanguage^%occMessages(%request.GetCgiEnv("HTTP_ACCEPT_LANGUAGE"),"%CSP","+s") // Localization support
     
     #dim tSC As %Status = $$$OK
     #dim e As %Exception.AbstractException
@@ -305,6 +310,36 @@ This project creates the DispatchMethod used to dispatch the Url and Method to t
     }
     
     Quit tSC
+]]></Implementation>
+</Method>
+
+<UDLText name="T">
+<Content><![CDATA[
+/**
+Called for a REST page in the event of a login being required
+**/
+]]></Content>
+</UDLText>
+
+<Method name="Login">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>skipheader:%Boolean=1</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	Do %response.SetHeader("Access-Control-Allow-Origin","*")
+	Do %response.SetHeader("Access-Control-Allow-Methods","GET, PUT, POST, DELETE, OPTIONS")
+	Do %response.SetHeader("Access-Control-Max-Age","10000")
+	Do %response.SetHeader("Access-Control-Allow-Headers","Content-Type, Authorization, Accept-Language")
+	
+	Set %response.CharSet = "utf-8"
+	Set %response.ContentType="application/json"
+	
+	If (%request.GetCgiEnv("REQUEST_METHOD") = "OPTIONS"){
+		Do %response.WriteHTTPHeader()
+		Return $$$OK
+	}
+	
+    Quit ##super(skipheader)
 ]]></Implementation>
 </Method>
 
