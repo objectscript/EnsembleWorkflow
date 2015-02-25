@@ -351,7 +351,7 @@ Called for a REST page in the event of a login being required
     #; Write out the header
     Do %response.WriteHTTPHeader()
     
-    Write "{""Error"":""Access Denied""}"
+    Write "{""Error"":""Access denied""}"
         
     #; Done
     Quit $$$OK

@@ -13,7 +13,7 @@
 <XMLNamespace>http://www.intersystems.com/urlmap</XMLNamespace>
 <Data><![CDATA[
 <Routes>
-<Route Url="/login" Method="POST" Call="DoLogin"/>
+<Route Url="/logout" Method="GET" Call="Logout"/>
 <Route Url="/tasks" Method="GET" Call="GetTasks"/>
 <Route Url="/tasks/:id" Method="GET" Call="GetTask"/>
 <Route Url="/tasks/:id" Method="POST" Call="PostTask"/>
@@ -22,15 +22,14 @@
 ]]></Data>
 </XData>
 
-<Method name="DoLogin">
+<Method name="Logout">
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	#dim %session As %CSP.Session
-	set st = %session.Login(%request.Content.Username,%request.Content.Password)
-	return:($$$ISERR(st)) st
-	write "{""Username"": """_$Username_"""}"
-	return $$$OK
+	set st = %session.Logout(1)
+	set %session.EndSession = 1
+	return st
 ]]></Implementation>
 </Method>
 
