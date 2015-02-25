@@ -78,7 +78,7 @@ Test method</Description>
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-    write "{Status: ""OK""}"
+    write "{""Status"": ""OK""}"
     return $$$OK
 ]]></Implementation>
 </Method>
