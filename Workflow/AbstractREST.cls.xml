@@ -339,7 +339,22 @@ Called for a REST page in the event of a login being required
 		Return $$$OK
 	}
 	
-    Quit ##super(skipheader)
+    #; Don't want the session token
+    Set %response.OutputSessionToken=0
+    
+    #; Set the Http Status
+    Set %response.Status="403 Forbidden"
+    
+    #; We want Basic authentication
+    Do %response.SetHeader("WWW-Authenticate","Basic")
+    
+    #; Write out the header
+    Do %response.WriteHTTPHeader()
+    
+    Write "{""Error"":""Access Denied""}"
+        
+    #; Done
+    Quit $$$OK
 ]]></Implementation>
 </Method>
 
