@@ -4,6 +4,11 @@
 <Super>Workflow.AbstractREST</Super>
 <TimeCreated>63579,55437.349631</TimeCreated>
 
+<Parameter name="CHARSET">
+<Type>String</Type>
+<Default>utf-8</Default>
+</Parameter>
+
 <Parameter name="UseSession">
 <Type>Integer</Type>
 <Default>1</Default>
