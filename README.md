@@ -22,7 +22,7 @@ These are the possible requests to web application (add param `?Namespace={Desir
 
 ## Prerequisites
 
-If you work with Ensemble Workflow it is recommended to familiaze yourself with [EnsLib.Workflow](http://docs.intersystems.com/latest/csp/documatic/%25CSP.Documatic.cls?PAGE=CLASS&LIBRARY=ENSLIB&PACKAGE=1&CLASSNAME=EnsLib.Workflow) package. Here's quick primer on the main classes:
+If you work with Ensemble Workflow it is recommended to familiarize yourself with [EnsLib.Workflow](http://docs.intersystems.com/latest/csp/documatic/%25CSP.Documatic.cls?PAGE=CLASS&LIBRARY=ENSLIB&PACKAGE=1&CLASSNAME=EnsLib.Workflow) package. Here's a quick primer on the main classes:
 
 | Class                            | Description                                                                                                                                                                                                                                                                                                    | 
 |----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
@@ -41,7 +41,7 @@ If you work with Ensemble Workflow it is recommended to familiaze yourself with 
 
 ## GET tasks 
 
-It's the basic and first requst you need to execute after logging in (by authentication method you configured for REST web application). It returns basic information unassigned tasks or tasks assigned to current user, here's how it looks like:
+It's the basic and first request you need to execute after logging in (by authentication method you configured for REST web application). It returns basic information unassigned tasks or tasks assigned to a current user, here's how it looks like:
 
 ```
 {
@@ -86,14 +86,14 @@ Here we can see two tasks, fist assigned to a current user (dev) and second one 
 | Message     | Detailed message body for this task                                                | First 25 symbols only                                  | 
 | TaskId      | Id of EnsLib.Workflow.TaskResponse object                                          |                                                        | 
 | RoleName    | The workflow role (EnsLib.Workflow.RoleDefinition)                                 |                                                        | 
-| AssignedTo  | Name of the user that has currently has ownership of the associated task (if any). | Either current user or no one                          | 
+| AssignedTo  | Name of the user that has currently has ownership of the associated task (if any)  | Either current user or no one                          | 
 | TimeCreated | Creation time                                                                      | UTC timestamp                                          | 
 | Age         | Age of this item                                                                   |                                                        | 
 | UserName    | Current workflow user  (EnsLib.Workflow.UserDefinition)                            | Current user                                           | 
 
 ## GET tasks/:id
 
-After you received main information about available tasks, you can see it in more detail, by requesting it by id (`345||dev` in example). Here's how response object looks like:
+After you received main information about available tasks, you can see it in more detail, by requesting it by id (`345||dev` in the example). Here's how response object looks like:
 
 ```
 {
@@ -162,18 +162,18 @@ After you received main information about available tasks, you can see it in mor
 }
 ```
 
-It's just a json representation of [EnsLib.Workflow.Worklist](http://docs.intersystems.com/latest/csp/documatic/%25CSP.Documatic.cls?PAGE=CLASS&LIBRARY=ENSLIB&CLASSNAME=EnsLib.Workflow.Worklist) object.
-This request provides enouth information to display task to the user.
+It's just a JSON representation of [EnsLib.Workflow.Worklist](http://docs.intersystems.com/latest/csp/documatic/%25CSP.Documatic.cls?PAGE=CLASS&LIBRARY=ENSLIB&CLASSNAME=EnsLib.Workflow.Worklist) object.
+This request provides enougth information to display task to the user.
 
 ##  POST tasks/:id
 
-After user is done working on his task, you need to notify Workflow engine about new state of the task. To do thet, execute this request, with the json representation of EnsLib.Workflow.Worklist object (received from the previous request) as a body.
+After a user is done working on a task, you need to notify Workflow engine about a new state of a task. To do that, execute this request, with the JSON representation of EnsLib.Workflow.Worklist object (received from the previous request) as a body.
 To express changes made by user, modify EnsLib.Workflow.Worklist object:
 
-- Set `Task.%Action` property to one of %Actions values or `$Accept` to accept task, `$Relinquish` to relinquish task and `$Save` to save changes made to task
-- Provide `Task.%FormValues` as an array with kays from `%FormFields` and values provided from a client
+- Set `Task.%Action` property to one of %Actions values or `$Accept` to accept a task, `$Relinquish` to relinquish task and `$Save` to save changes made to a task
+- Provide `Task.%FormValues` as an array with keys from `%FormFields` and values provided by a client
 
-Here's an example of user completing `345||dev` task (by choosing Corrected action):
+Here's an example of a user completing `345||dev` task (by choosing Corrected action):
 
 ```
 {  
