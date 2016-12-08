@@ -15,7 +15,7 @@ These are the possible requests to web application (add param `?Namespace={Desir
 | URL                         | Type | Response  | Description                    |
 |-----------------------------|------|-----------|--------------------------------|
 | tasks                       | GET  | JSON      | Get unassigned tasks or tasks assigned to the current user |
-| tasks/:id                   | GET  | JSON      | Get detailed information about task |
+| tasks/:id                   | GET  | JSON      | Get detailed information about a task |
 | tasks/:id                   | POST | JSON      | Process task modified by a user|
 | test                        | GET  | JSON      | Test info                      |
 
@@ -170,7 +170,7 @@ This request provides enough information to display task to the user.
 After a user is done working on a task, you need to notify Workflow engine about a new state of a task. To do that, execute this request, with the JSON representation of EnsLib.Workflow.Worklist object (received from the previous request) as a body.
 To express changes made by a user, modify EnsLib.Workflow.Worklist object:
 
-- Set `Task.%Action` property to one of %Actions values or `$Accept` to accept a task, `$Relinquish` to relinquish task and `$Save` to save changes made to a task
+- Set `Task.%Action` property to one of the %Actions values or `$Accept` to accept a task, `$Relinquish` to relinquish task and `$Save` to save changes made to a task
 - Provide `Task.%FormValues` as an array with keys from `%FormFields` and values provided by a client
 
 Here's an example of a user completing `345||dev` task (by choosing Corrected action):
