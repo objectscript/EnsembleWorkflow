@@ -4,20 +4,20 @@ Restful web API for InterSystems Ensemble Workflow
 
 ## Installation
 1. Import and compile this project.
-2. Create a web-application for REST in the Portal Management System (for ex. /csp/workflow/rest). Set dispatch class to Workflow.REST, Authentication methods to 'Unauthorized' and 'Password'.
-3. (Optional) add Workflow package mapping if you need to query another namespace.
+2. Create a web-application for REST in the Portal Management System (for ex. `/csp/workflow/rest`). Set dispatch class to `Workflow.REST`, Authentication methods to 'Unauthorized' and 'Password'.
+3. (Optional) Add Workflow package mapping if you need to query another namespace.
 
 
 ##Requests
 
 These are the possible requests to web application (add param `?Namespace={Desired Namespace}` to query another namespace):
 
-| URL                         | Type | Body (JSON)                 | Response  | Description                    |
-|-----------------------------|------|-----------------------------|-----------|--------------------------------|
-| tasks                       | GET  |                             | JSON      | Get unassigned tasks or tasks assigned to current user |
-| tasks/:id                   | GET  |                             | JSON      | EnsLib.Workflow.Worklist object|
-| tasks/:id                   | POST |{EnsLib.Workflow.Worklist object}|JSON   | Processing of modified object  |
-| test                        | GET  |                             | JSON      | Test info                      |
+| URL                         | Type | Response  | Description                    |
+|-----------------------------|------|-----------|--------------------------------|
+| tasks                       | GET  | JSON      | Get unassigned tasks or tasks assigned to current user |
+| tasks/:id                   | GET  | JSON      | EnsLib.Workflow.Worklist object|
+| tasks/:id                   | POST | JSON      | Processing of modified object  |
+| test                        | GET  | JSON      | Test info                      |
 
 
 ## Prerequisites
@@ -47,36 +47,35 @@ It's the basic and first requst you need to execute after logging in (by authent
 {
    "children":[
       {
-         "ID":"383015||user4",
-         "New":"",
+         "ID":"317||dev",
+         "New":"*",
          "Priority":3,
-         "Subject":"Task subject",
-         "Message":"some additional message",
-         "TaskId":383015,
-         "RoleName":"Role",
-         "AssignedTo":"user4",
-         "TimeCreated":"2016-12-07 22:09:03.599",
-         "Age":"00w 0d 16h 32m 30s",
-         "UserName":"user4"
+         "Subject":"Problem reported by TestUser",
+         "Message":"SampleTask",
+         "TaskId":317,
+         "RoleName":"Demo-Development",
+         "AssignedTo":"",
+         "TimeCreated":"2016-12-04 14:30:47.657",
+         "Age":"00w 3d 23h 31m 58s",
+         "UserName":"dev"
       },
       {
-         "ID":"383011||user4",
-         "New":"*",
-         "Priority":1,
-         "Subject":"Task subject",
-         "Message":"some additional message",
-         "TaskId":383011,
-         "RoleName":"Role",
-         "AssignedTo":"",
-         "TimeCreated":"2016-12-07 20:43:21.627",
-         "Age":"00w 0d 17h 58m 12s",
-         "UserName":"user4"
+         "ID":"345||dev",
+         "New":"",
+         "Priority":3,
+         "Subject":"Problem reported by TestUser",
+         "Message":"SampleTask",
+         "TaskId":345,
+         "RoleName":"Demo-Development",
+         "AssignedTo":"dev",
+         "TimeCreated":"2016-12-04 14:30:35.647",
+         "Age":"00w 3d 23h 32m 10s",
+         "UserName":"dev"
       }
-   ],
-   "total":2
+   ]
 }
 ```
-Here we can see two tasks, fist assigned to a current user (user4) and second one unassigned to the user. Object properties are 
+Here we can see two tasks, fist assigned to a current user (dev) and second one unassigned to the current user. Object properties are 
 
 | Property    | Description                                                                        | Value                                                  | 
 |-------------|------------------------------------------------------------------------------------|--------------------------------------------------------| 
@@ -91,3 +90,160 @@ Here we can see two tasks, fist assigned to a current user (user4) and second on
 | TimeCreated | Creation time                                                                      | UTC timestamp                                          | 
 | Age         | Age of this item                                                                   |                                                        | 
 | UserName    | Current workflow user  (EnsLib.Workflow.UserDefinition)                            | Current user                                           | 
+
+## GET tasks/:id
+
+After you received main information about available tasks, you can see it in more detail, by requesting it by id (`345||dev` in example). Here's how response object looks like:
+
+```
+{
+	"_class":"EnsLib.Workflow.Worklist",
+	"_id":"345||dev",
+	"Task": {
+		"_class":"EnsLib.Workflow.TaskResponse",
+		"_id":345,
+		"%Action":"",
+		"%Priority":3,
+		"%UserName":"",
+		"%UserTitle":"",
+		"%UserRanking":"",
+		"%RoleName":"Demo-Development",
+		"%Subject":"Problem reported by TestUser",
+		"%Message":"SampleTask",
+		"%Actions":"Corrected,Ignored",
+		"%FormTemplate":"",
+		"%FormFields":"Comments",
+		"%FormValues": {},
+		"%Status":"Assigned",
+		"%TaskStatus": {
+			"_class":"EnsLib.Workflow.TaskStatus",
+			"Role": {
+				"_class":"EnsLib.Workflow.RoleDefinition",
+				"_id":"Demo-Development",
+				"Name":"Demo-Development",
+				"Description":"",
+				"Capacity":100
+			},
+			"AssignedTo":"dev",
+			"TimeCreated":"2015-03-04 13:27:39.917",
+			"TimeCompleted":"",
+			"SessionId":291,
+			"Source":"HelpDesk",
+			"ResponseToken":"323|Demo.Workflow.Production",
+			"IsComplete":false,
+			"Request": {
+				"_class":"EnsLib.Workflow.TaskRequest",
+				"_id":344,
+				"%Actions":"Corrected,Ignored",
+				"%Subject":"Problem reported by TestUser",
+				"%Message":"SampleTask",
+				"%Priority":3,
+				"%UserName":"",
+				"%Title":"",
+				"%TaskHandler":"",
+				"%Command":"",
+				"%FormTemplate":"",
+				"%FormFields":"Comments",
+				"%FormValues": {}
+			}
+		}
+	},
+	"User": {
+		"_class":"EnsLib.Workflow.UserDefinition",
+		"_id":"dev",
+		"Name":"dev",
+		"FullName":"",
+		"IsActive":true
+	},
+	"Role":null,
+	"TimeCreated":"2016-12-04 14:30:35.647",
+	"IsNew":false,
+	"Age":"00w 3d 23h 34m 48s"
+}
+```
+
+It's just a json representation of [EnsLib.Workflow.Worklist](http://docs.intersystems.com/latest/csp/documatic/%25CSP.Documatic.cls?PAGE=CLASS&LIBRARY=ENSLIB&CLASSNAME=EnsLib.Workflow.Worklist) object.
+This request provides enouth information to display task to the user.
+
+##  POST tasks/:id
+
+After user is done working on his task, you need to notify Workflow engine about new state of the task. To do thet, execute this request, with the json representation of EnsLib.Workflow.Worklist object (received from the previous request) as a body.
+To express changes made by user, modify EnsLib.Workflow.Worklist object:
+
+- Set `Task.%Action` property to one of %Actions values or `$Accept` to accept task, `$Relinquish` to relinquish task and `$Save` to save changes made to task
+- Provide `Task.%FormValues` as an array with kays from `%FormFields` and values provided from a client
+
+Here's an example of user completing `345||dev` task (by choosing Corrected action):
+
+```
+{  
+   "_class":"EnsLib.Workflow.Worklist",
+   "_id":"345||dev",
+   "Task":{  
+      "_class":"EnsLib.Workflow.TaskResponse",
+      "_id":345,
+      "%Action":"Corrected",
+      "%Priority":3,
+      "%UserName":"",
+      "%UserTitle":"",
+      "%UserRanking":"",
+      "%RoleName":"Demo-Development",
+      "%Subject":"Problem reported by TestUser",
+      "%Message":"SampleTask",
+      "%Actions":"Corrected,Ignored",
+      "%FormTemplate":"",
+      "%FormFields":"Comments",
+      "%FormValues":{  
+         "Comments":"user-made comment"
+      },
+      "%Status":"Assigned",
+      "%TaskStatus":{  
+         "_class":"EnsLib.Workflow.TaskStatus",
+         "Role":{  
+            "_class":"EnsLib.Workflow.RoleDefinition",
+            "_id":"Demo-Development",
+            "Name":"Demo-Development",
+            "Description":"",
+            "Capacity":100
+         },
+         "AssignedTo":"dev",
+         "TimeCreated":"2015-03-04 13:27:39.917",
+         "TimeCompleted":"",
+         "SessionId":291,
+         "Source":"HelpDesk",
+         "ResponseToken":"323|Demo.Workflow.Production",
+         "IsComplete":false,
+         "Request":{  
+            "_class":"EnsLib.Workflow.TaskRequest",
+            "_id":344,
+            "%Actions":"Corrected,Ignored",
+            "%Subject":"Problem reported by TestUser",
+            "%Message":"SampleTask",
+            "%Priority":3,
+            "%UserName":"",
+            "%Title":"",
+            "%TaskHandler":"",
+            "%Command":"",
+            "%FormTemplate":"",
+            "%FormFields":"Comments",
+            "%FormValues":{  
+            }
+         }
+      }
+   },
+   "User":{  
+      "_class":"EnsLib.Workflow.UserDefinition",
+      "_id":"dev",
+      "Name":"dev",
+      "FullName":"",
+      "IsActive":true
+   },
+   "Role":null,
+   "TimeCreated":"2016-12-04 14:30:35.647",
+   "IsNew":false,
+   "Age":"00w 3d 23h 46m 40s"
+}
+```
+
+
+
