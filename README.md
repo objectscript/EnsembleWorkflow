@@ -1,3 +1,11 @@
+DEPRECATED DEPRECATED DEPRECATED DEPRECATED
+==============
+
+DO NOT USE THIS VERSION. 
+New version [here](https://github.com/intersystems-ru/WorkflowAPI). 
+
+
+
 EnsembleWorkflow
 ==============
 Restful web API for InterSystems Ensemble Workflow
